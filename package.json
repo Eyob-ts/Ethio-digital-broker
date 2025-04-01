@@ -1,16 +1,19 @@
 {
-<<<<<<< HEAD
   "name": "ethio_digital_broker",
   "version": "1.0.0",
   "main": "index.js",
-  "scripts": {
-    "dev": "nodemon backend/index.js"
-  },
-  "keywords": [],
-  "author": "",
   "type": "module",
   "license": "ISC",
   "description": "",
+  "scripts": {
+    "dev": "nodemon backend/index.js",
+    "client": "vite",
+    "build": "vite build",
+    "lint": "eslint .",
+    "preview": "vite preview"
+  },
+  "keywords": [],
+  "author": "",
   "dependencies": {
     "axios": "^1.7.9",
     "bcryptjs": "^2.4.3",
@@ -26,29 +29,15 @@
     "multer": "^1.4.5-lts.1",
     "swagger-jsdoc": "^6.2.8",
     "swagger-ui-express": "^5.0.1",
-    "uud": "^0.0.0",
+    "uud": "^0.0.0", 
     "uuid": "^11.1.0",
     "validator": "^13.12.0",
-    "ws": "^8.18.0"
-  },
-  "devDependencies": {
-    "nodemon": "^3.1.9"
-=======
-  "name": "client",
-  "private": true,
-  "version": "0.0.0",
-  "type": "module",
-  "scripts": {
-    "dev": "vite",
-    "build": "vite build",
-    "lint": "eslint .",
-    "preview": "vite preview"
-  },
-  "dependencies": {
+    "ws": "^8.18.0",
     "react": "^18.3.1",
-    "react-dom": "^18.3.1"
+    "react-dom": "^18.3.1" 
   },
   "devDependencies": {
+    "nodemon": "^3.1.9",
     "@eslint/js": "^9.9.0",
     "@types/react": "^18.3.3",
     "@types/react-dom": "^18.3.0",
@@ -62,6 +51,6 @@
     "postcss": "^8.4.47",
     "tailwindcss": "^3.4.13",
     "vite": "^5.4.1"
->>>>>>> d55391964bf5cffc8881232119b908d58386b9d0
-  }
+  },
+  "private": true
 }

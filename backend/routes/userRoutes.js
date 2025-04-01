@@ -10,7 +10,7 @@ import {
 } from "../controllers/userController.js";
 
 const router = express.Router();
-
+ 
 // Admin-only routes
 
 router.get("/:userId/phone",authenticate, getPhoneNumberById);

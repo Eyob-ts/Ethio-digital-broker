@@ -128,7 +128,7 @@ import {
   verifyOwner
 } from '../controllers/Listing.js';
 
-
+  
 const router = express.Router();
  
 // Public routes
@@ -141,7 +141,7 @@ router.get("/:listingId/reviews", authenticate, getReviewsForListing);
 router.get("/users/:userId/listings", authenticate, getListingsByUserId);
 
 router.get("/users/:userId/received-reviews", authenticate, getReceivedReviews);
-
+ 
 // Protected routes   
 router.use(authenticate);    
 router.post('/', uploadFiles, createListing);

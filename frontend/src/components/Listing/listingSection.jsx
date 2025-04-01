@@ -111,7 +111,7 @@ const ListingSection = () => {
   if (listings.length === 0) {
     return (
       <div className="flex flex-col justify-center items-center p-10">
-        <span className="text-gray-900 dark:text-gray-100">No listings available</span>
+        <span className="text-gray-900 dark:text-gray-100">No listings available </span>
         <a
           href="/create-listing"
           className="mt-4 bg-green-500 text-white px-4 py-2 rounded-md hover:bg-green-400"

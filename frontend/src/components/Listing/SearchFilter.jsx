@@ -1,11 +1,13 @@
 import React, { useState } from "react";
+import Slider from 'rc-slider';
+import 'rc-slider/assets/index.css';
 
 const SearchFilter = ({ onFilterChange }) => {
   const [filters, setFilters] = useState({
     title: "",
     category: "",
-    minPrice: "",
-    maxPrice: "",
+    minPrice: 0,
+    maxPrice: 10000,
     condition: "",
     model: "",
     year: "",
@@ -17,25 +19,38 @@ const SearchFilter = ({ onFilterChange }) => {
     listingType: "",
   });
 
+  const priceRangeLimits = {
+    min: 0,
+    max: 9000000000
+  };
+
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setFilters((prevFilters) => ({
-      ...prevFilters,
-      [name]: value,
+    setFilters(prev => ({
+      ...prev,
+      [name]: value
+    }));
+  };
+
+  const handlePriceChange = (value) => {
+    setFilters(prev => ({
+      ...prev,
+      minPrice: value[0],
+      maxPrice: value[1]
     }));
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    onFilterChange(filters); // Pass filters to parent component
+    onFilterChange(filters);
   };
 
   const handleReset = () => {
     setFilters({
       title: "",
       category: "",
-      minPrice: "",
-      maxPrice: "",
+      minPrice: priceRangeLimits.min,
+      maxPrice: priceRangeLimits.max,
       condition: "",
       model: "",
       year: "",
@@ -46,7 +61,16 @@ const SearchFilter = ({ onFilterChange }) => {
       status: "",
       listingType: "",
     });
-    onFilterChange({}); // Clear filters in parent component
+    onFilterChange({});
+  };
+
+  // Format currency
+  const formatCurrency = (value) => {
+    return new Intl.NumberFormat('en-US', {
+      style: 'currency',
+      currency: 'USD',
+      maximumFractionDigits: 0
+    }).format(value);
   };
 
   return (
@@ -88,64 +112,74 @@ const SearchFilter = ({ onFilterChange }) => {
             onChange={handleChange}
             className="p-3 border border-gray-300 dark:border-gray-600 rounded-lg dark:bg-gray-700 dark:text-white focus:outline-none focus:ring-2 focus:ring-blue-500"
           >
-            <option value="">Category</option>
+            <option value="">All Categories</option>
             <option value="Car">Car</option>
             <option value="House">House</option>
-            <option value="Service">Service</option>
+            <option value="Electronics">Electronics</option>
           </select>
 
-          {/* Min Price */}
-          <input
-            type="number"
-            name="minPrice"
-            placeholder="Min Price"
-            value={filters.minPrice}
-            onChange={handleChange}
-            className="p-3 border border-gray-300 dark:border-gray-600 rounded-lg dark:bg-gray-700 dark:text-white focus:outline-none focus:ring-2 focus:ring-blue-500"
-          />
+          {/* Price Range Slider */}
+          <div className="md:col-span-2 lg:col-span-1 space-y-2">
+            <label className="block text-sm font-medium text-gray-700 dark:text-gray-300">
+              Price Range: {formatCurrency(filters.minPrice)} - {formatCurrency(filters.maxPrice)}
+            </label>
+            <div className="px-4 py-2">
+              <Slider
+                range
+                min={priceRangeLimits.min}
+                max={priceRangeLimits.max}
+                value={[filters.minPrice, filters.maxPrice]}
+                onChange={handlePriceChange}
+                allowCross={false}
+                trackStyle={[{ backgroundColor: '#3b82f6', height: 6 }]}
+                handleStyle={[
+                  { 
+                    backgroundColor: '#3b82f6',
+                    borderColor: '#3b82f6',
+                    width: 20,
+                    height: 20,
+                    marginTop: -7,
+                    opacity: 1
+                  },
+                  { 
+                    backgroundColor: '#3b82f6',
+                    borderColor: '#3b82f6',
+                    width: 20,
+                    height: 20,
+                    marginTop: -7,
+                    opacity: 1
+                  }
+                ]}
+                railStyle={{ 
+                  backgroundColor: '#e5e7eb',
+                  height: 6
+                }}
+              />
+            </div>
+            <div className="flex justify-between text-xs text-gray-500 dark:text-gray-400">
+              <span>{formatCurrency(priceRangeLimits.min)}</span>
+              <span>{formatCurrency(priceRangeLimits.max)}</span>
+            </div>
+          </div>
 
-          {/* Max Price */}
-          <input
-            type="number"
-            name="maxPrice"
-            placeholder="Max Price"
-            value={filters.maxPrice}
-            onChange={handleChange}
-            className="p-3 border border-gray-300 dark:border-gray-600 rounded-lg dark:bg-gray-700 dark:text-white focus:outline-none focus:ring-2 focus:ring-blue-500"
-          />
-
-          {/* Fuel Type */}
+          {/* Other filters... */}
           <select
-            name="fuel"
-            value={filters.fuel}
+            name="condition"
+            value={filters.condition}
             onChange={handleChange}
             className="p-3 border border-gray-300 dark:border-gray-600 rounded-lg dark:bg-gray-700 dark:text-white focus:outline-none focus:ring-2 focus:ring-blue-500"
           >
-            <option value="">Fuel Type</option>
-            <option value="Petrol">Petrol</option>
-            <option value="Diesel">Diesel</option>
-            <option value="Hybrid">Hybrid</option>
-            <option value="Electric">Electric</option>
+            <option value="">Any Condition</option>
+            <option value="New">New</option>
+            <option value="Used">Used</option>
           </select>
 
-          {/* Transmission */}
-          <select
-            name="transmission"
-            value={filters.transmission}
-            onChange={handleChange}
-            className="p-3 border border-gray-300 dark:border-gray-600 rounded-lg dark:bg-gray-700 dark:text-white focus:outline-none focus:ring-2 focus:ring-blue-500"
-          >
-            <option value="">Transmission</option>
-            <option value="Manual">Manual</option>
-            <option value="Automatic">Automatic</option>
-          </select>
-
-          {/* Location */}
+          {/* Model */}
           <input
             type="text"
-            name="location"
-            placeholder="Location"
-            value={filters.location}
+            name="model"
+            placeholder="Model"
+            value={filters.model}
             onChange={handleChange}
             className="p-3 border border-gray-300 dark:border-gray-600 rounded-lg dark:bg-gray-700 dark:text-white focus:outline-none focus:ring-2 focus:ring-blue-500"
           />
@@ -156,6 +190,42 @@ const SearchFilter = ({ onFilterChange }) => {
             name="year"
             placeholder="Year"
             value={filters.year}
+            onChange={handleChange}
+            min="1900"
+            max={new Date().getFullYear()}
+            className="p-3 border border-gray-300 dark:border-gray-600 rounded-lg dark:bg-gray-700 dark:text-white focus:outline-none focus:ring-2 focus:ring-blue-500"
+          />
+
+          {/* Fuel Type */}
+          <select
+            name="fuel"
+            value={filters.fuel}
+            onChange={handleChange}
+            className="p-3 border border-gray-300 dark:border-gray-600 rounded-lg dark:bg-gray-700 dark:text-white focus:outline-none focus:ring-2 focus:ring-blue-500"
+          >
+            <option value="">Any Fuel Type</option>
+            <option value="Petrol">Petrol</option>
+            <option value="Diesel">Diesel</option>
+          </select>
+
+          {/* Transmission */}
+          <select
+            name="transmission"
+            value={filters.transmission}
+            onChange={handleChange}
+            className="p-3 border border-gray-300 dark:border-gray-600 rounded-lg dark:bg-gray-700 dark:text-white focus:outline-none focus:ring-2 focus:ring-blue-500"
+          >
+            <option value="">Any Transmission</option>
+            <option value="Manual">Manual</option>
+            <option value="Automatic">Automatic</option>
+          </select>
+
+          {/* Location */}
+          <input
+            type="text"
+            name="location"
+            placeholder="Location"
+            value={filters.location}
             onChange={handleChange}
             className="p-3 border border-gray-300 dark:border-gray-600 rounded-lg dark:bg-gray-700 dark:text-white focus:outline-none focus:ring-2 focus:ring-blue-500"
           />

@@ -23,7 +23,9 @@ const PaymentCallback = () => {
 
       try {
         // Call the backend to verify the payment
-        const response = await axios.post(`${API_URL}/api/payment/verify`, { tx_ref });
+        const response = await axios.post(`${API_URL}/api/payment/verify`, { tx_ref }, {
+          headers: { Authorization: `Bearer ${localStorage.getItem("authToken")}` },
+        });
 
         if (response.data.status === "success") {
           setPaymentStatus("success"); // Payment was successful

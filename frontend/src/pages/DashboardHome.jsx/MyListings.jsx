@@ -26,11 +26,10 @@ const MyListings = () => {
     try {
       setLoading(true);
       const response = await axios.get(
-        `${API_URL}/api/listings/users/${userId}/listings`, // Use userId from URL
-        {
+        `${API_URL}/api/listings/users/${userId}/listings`, {
           headers: { Authorization: `Bearer ${localStorage.getItem("authToken")}` },
-        }
-      );
+        });
+      
       setListings(response.data.data);
       setError("");
     } catch (err) {

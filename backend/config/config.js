@@ -9,7 +9,7 @@ export default {
     port: process.env.PORT || 5000
   },
   mongodb: {
-    url: process.env.MONGODB_URI || 'mongodb://localhost:27017/ethio_digital_broker'
+    url: process.env.MONGODB_URI || 'mongodb://localhost:27017/broker'
   }
 };
  
