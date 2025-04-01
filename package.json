@@ -6,13 +6,15 @@
   "license": "ISC",
   "description": "",
   "scripts": {
-    "dev": "nodemon backend/index.js",
-    "client": "vite",
-    "build": "vite build",
-    "lint": "eslint .",
-    "preview": "vite preview",
-    "start": "node backend/index.js"
-  },
+  "dev": "nodemon backend/index.js",
+  "client": "cd frontend && vite",
+  "build": "cd frontend && vite build",
+  "lint": "eslint .",
+  "preview": "cd frontend && vite preview",
+  "start": "node backend/index.js",
+  "backend-install": "cd backend && npm install",
+  "test": "echo \"Error: no test specified\" && exit 1"
+},
   "keywords": [],
   "author": "",
   "dependencies": {
